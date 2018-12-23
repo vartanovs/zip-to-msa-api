@@ -1,0 +1,11 @@
+coverage
+node_modules
+
+Dockerfile
+docker-compose.*
+.dockerignore
+.DS_Store
+
+README.md
+SPECS.md
+LICENSE

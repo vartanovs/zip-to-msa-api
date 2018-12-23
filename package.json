@@ -4,6 +4,7 @@
   "description": "API that accepts ZIP codes and outputs MSA and Population",
   "main": "server/index.ts",
   "scripts": {
+    "docker-update": "bash ./scripts/docker-update.sh",
     "test": "NODE_ENV=test jest"
   },
   "repository": {

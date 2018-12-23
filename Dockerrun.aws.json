@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "436925851720.dkr.ecr.us-west-2.amazonaws.com/zip-to-msa-api:<VERSION>",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3000"
+    }
+  ]
+}

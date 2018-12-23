@@ -1,0 +1,19 @@
+{
+  "name": "zip-to-msa-api",
+  "version": "1.0.0",
+  "description": "API that accepts ZIP codes and outputs MSA and Population",
+  "main": "server/index.ts",
+  "scripts": {
+    "test": "NODE_ENV=test jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vartanovs/zip-to-msa-api.git"
+  },
+  "author": "Serge Vartanov <vartanov.s@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vartanovs/zip-to-msa-api/issues"
+  },
+  "homepage": "https://github.com/vartanovs/zip-to-msa-api#readme"
+}

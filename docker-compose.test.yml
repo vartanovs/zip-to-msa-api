@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  test_api_server:
+    image: vartanovs/zip-to-msa-api
+    container_name: "test-api-server"
+    ports:
+      - "3000:3000"
+    volumes:
+      - coverage:/usr/src/app/coverage
+      - node_modules:/usr/src/app/node_modules
+    command: bash -c "npm install && npm run test-coverage"
+
+# shared volumes
+volumes:
+  coverage:
+  node_modules:

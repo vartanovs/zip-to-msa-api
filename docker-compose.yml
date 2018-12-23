@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  api_server:
+    image: vartanovs/zip-to-msa-api
+    container_name: "api-server"
+    ports:
+      - "3000:3000"
+    volumes:
+      - node_modules:/usr/src/app/node_modules
+    command: bash -c "npm install && npm start"
+
+# shared volumes
+volumes:
+  node_modules:

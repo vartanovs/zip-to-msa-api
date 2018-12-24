@@ -8,6 +8,7 @@ import * as path from 'path';
 
 // Import Middleware
 import inputController from './controllers/inputController';
+import dataController from './controllers/dataController';
 
 // Invoke express server
 const app = express();
@@ -16,6 +17,7 @@ const app = express();
 app.get('/api',
   inputController.confirmInput,
   inputController.validateInput,
+  dataController.retrieveData,
   (_: express.Request, res: express.Response) => res.sendStatus(200));
 
 app.use('*',

@@ -71,7 +71,7 @@ describe('Input Controller - Confirm/Validate Input Middleware', () => {
     expect(next.mock.calls.length).toEqual(0);
   });
 
-  it('Providing a 5-digit "zip" query parameter clears validateInput middleware', () => {
+  it('Providing a 5-digit "zip" query parameter saves zip to res.locals and clears validateInput middleware', () => {
     request = httpMocks.createRequest({
       method: 'GET',
       url: '/api',
@@ -80,6 +80,7 @@ describe('Input Controller - Confirm/Validate Input Middleware', () => {
       },
     });
     inputController.validateInput(request, response, next);
+    expect(response.locals.zip).toEqual(request.query.zip);
     expect(next.mock.calls.length).toEqual(1);
   });
 })

@@ -22,6 +22,7 @@ const validateInput = (req: Request, res: Response, next: NextFunction): void | 
   if (req.query.zip.length !== 5) return res.status(400).json(errorMessages.zip.invalidLength);
   const zipAsNum = Number(req.query.zip);
   if (Number.isNaN(zipAsNum)) return res.status(400).json(errorMessages.zip.zipIsNaN);
+  res.locals.zip = req.query.zip;
   return next();
 };
 

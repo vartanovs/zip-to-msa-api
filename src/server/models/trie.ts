@@ -5,7 +5,7 @@
 
 export interface IMSAData {
   cbsa?: string,
-  regionName: string,
+  msaName: string,
   population2014: string,
   population2015: string,
 }

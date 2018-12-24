@@ -1,6 +1,9 @@
 coverage
 node_modules
 
+cache
+!cache/.gitkeep
+
 Dockerfile
 docker-compose.*
 .dockerignore

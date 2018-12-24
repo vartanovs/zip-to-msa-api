@@ -7,9 +7,11 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - cache:/usr/src/app/src/server/cache
       - node_modules:/usr/src/app/node_modules
     command: bash -c "npm install && npm start"
 
 # shared volumes
 volumes:
+  cache:
   node_modules:

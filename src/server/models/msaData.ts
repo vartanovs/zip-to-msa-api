@@ -90,7 +90,7 @@ const generateTrie = (fileName: string): Promise<Trie> => {
       if (record[0] !== 'CBSA') {
         if (record[2] && (record[1] !== 'NAME')) {
           const msaData: IMSAData = {
-            regionName: record[1],
+            msaName: record[1],
             population2014: record[2],
             population2015: record[3],
           }
@@ -127,7 +127,7 @@ const getData = async (cbsa: string, refreshData: boolean = false) => {
   // Short circuit if cbsa is 99999
   const blankMSA: IMSAData = {
     cbsa: cbsa,
-    regionName: 'N/A',
+    msaName: 'N/A',
     population2014: 'N/A',
     population2015: 'N/A',
   }

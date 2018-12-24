@@ -10,7 +10,7 @@ import * as csvParse from 'csv-parse';
 import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
 import Trie from './trie';
-import writeCSV from '../utils/writeCsv';
+import writeCSV from '../utils/writeCSV';
 
 /**
  * Generate Parsed Zip Code > CBSA Mapping Data with only ZIP and CBSA parameters

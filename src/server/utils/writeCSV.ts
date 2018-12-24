@@ -1,5 +1,5 @@
 /**
- * @module writeCsv.ts
+ * @module writeCSV.ts
  * @description CSV Writing Utility
  */
 

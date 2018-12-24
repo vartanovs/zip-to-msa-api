@@ -7,11 +7,13 @@ services:
     ports:
       - "3000:3000"
     volumes:
+      - cache:/usr/src/app/src/server/cache
       - coverage:/usr/src/app/coverage
       - node_modules:/usr/src/app/node_modules
     command: bash -c "npm install && npm run test-coverage"
 
 # shared volumes
 volumes:
+  cache:
   coverage:
   node_modules:

@@ -8,9 +8,11 @@ services:
       - "3000:3000"
     volumes:
       - ./:/usr/src/app
+      - cache:/usr/src/app/src/server/cache
       - node_modules:/usr/src/app/node_modules
     command: bash -c "npm install && npm run dev"
 
 # shared volumes
 volumes:
+  cache:
   node_modules:

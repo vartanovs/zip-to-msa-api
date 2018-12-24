@@ -6,11 +6,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import * as csvParse from 'csv-parse';
-import * as csvStringify from 'csv-stringify';
 
+import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
-import fetchCsvData from '../utils/fetchCsvData';
 import Trie from './trie';
+import writeCSV from '../utils/writeCsv';
 
 /**
  * Generate Parsed Zip Code > CBSA Mapping Data with only ZIP and CBSA parameters
@@ -20,11 +20,11 @@ const generateParsedData = async (refreshData: boolean) => {
   // Check if raw ZIP>CBSA mapping files are already cached
   const rawZipToCbsaExists = await fsAsync.exists(path.resolve(__dirname, '../cache/zip_to_cbsa.csv'));
   // If raw mapping is not cached, fetch and save locally in server/cache
-  if (!rawZipToCbsaExists || refreshData) await fetchCsvData('zip_to_cbsa.csv');
+  if (!rawZipToCbsaExists || refreshData) await fetchCSV('zip_to_cbsa.csv');
   // Parse raw data for nexted array of zip and cbsa only
   const parsedDataArray = await parseRawData();
   // Write parsed data into new .csv file
-  await writeParsedData(parsedDataArray);
+  await writeCSV(parsedDataArray, 'zip_to_cbsa_parsed.csv');
 };
 
 /**
@@ -52,24 +52,6 @@ const parseRawData = () => {
   fs.createReadStream(path.resolve(__dirname, '../cache/zip_to_cbsa.csv')).pipe(csvParser);
 
   return parseComplete;
-};
-
-/**
- * Write ZIP:CBSA Mapped pairs into parsed .csv file
- * @param parsedDataArray Nested array of ZIP:CBSA Mapped Pairs
- */
-const writeParsedData = (parsedDataArray: string[][]) => {
-  // Wrap CSV Stringification Stream and Writefile into Promise
-  const writeComplete = new Promise<void>((resolve, reject) => {
-    csvStringify(parsedDataArray, { header: false }, (err, output) => {
-      if (err) reject(err);
-      else fs.writeFile(path.resolve(__dirname, '../cache/zip_to_cbsa_parsed.csv'), output, (err) => {
-        if (err) reject(err)
-        else resolve();
-      });
-    });
-  });
-  return writeComplete;
 };
 
 /**

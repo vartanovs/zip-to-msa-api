@@ -10,8 +10,9 @@ import fetch from 'node-fetch';
 
 /**
  * Fetch Raw CSV Data
+ * @param fileName The name of the file to be fetched and stored
  */
-const fetchData = (fileName: string): Promise<void> => {
+const fetchCSV = (fileName: string): Promise<void> => {
   // Wrap fetch in promise, resolve upon completion of writeFile stream
   return new Promise((resolve, reject) => {
     fetch(`https://s3.amazonaws.com/peerstreet-static/engineering/zip_to_msa/${fileName}`)
@@ -24,4 +25,4 @@ const fetchData = (fileName: string): Promise<void> => {
   });
 };
 
-export default fetchData;
+export default fetchCSV;

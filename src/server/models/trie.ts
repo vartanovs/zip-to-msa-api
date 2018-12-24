@@ -3,10 +3,11 @@
  * @description Trie Data Model
  */
 
-interface IMSAData {
-  cbsa: string,
-  pop2014: string,
-  pop2015: string,
+export interface IMSAData {
+  cbsa?: string,
+  regionName: string,
+  population2014: string,
+  population2015: string,
 }
 
 class TrieNode {
@@ -21,7 +22,7 @@ class TrieNode {
   }
 
   // Method to add a word and data to the Trie
-  add(word: string, data: string): string | IMSAData {
+  add(word: string, data: string | IMSAData): string | IMSAData {
     // If the word has no length, store the data
     if (!word.length) {
       this.data = data;

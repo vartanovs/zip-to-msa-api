@@ -18,7 +18,7 @@ app.get('/api',
   inputController.confirmInput,
   inputController.validateInput,
   dataController.retrieveData,
-  (_: express.Request, res: express.Response) => res.sendStatus(200));
+  (_: express.Request, res: express.Response) => res.json(res.locals));
 
 app.use('*',
   (_: express.Request, res: express.Response) => res.sendFile(path.resolve(__dirname, '../client/index.html')));

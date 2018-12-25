@@ -112,7 +112,6 @@ const generateTrie = (fileName: string): Promise<Trie> => {
   });
  
   fs.createReadStream(path.resolve(__dirname, `../cache/${fileName}`)).pipe(csvParser);
-
   return parseComplete;
 }
 

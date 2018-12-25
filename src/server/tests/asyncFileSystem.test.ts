@@ -12,7 +12,7 @@ import * as path from 'path';
 const mockExists = jest.spyOn(fs, 'exists');
 
 // Prepare Stubs
-const stubValidPath = path.resolve(__dirname, '../cache/test_to_test.csv')
+const stubValidPath = path.resolve(__dirname, '../cache/.gitkeep')
 const stubInvalidPath = path.resolve(__dirname, '../cache/invalid.csv')
 
 describe('Fetch CSV Utility', () => {

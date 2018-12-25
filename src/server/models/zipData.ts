@@ -10,7 +10,6 @@ import * as csvParse from 'csv-parse';
 import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
 import Trie from './trie';
-// import writeCSV from '../utils/writeCSV';
 import { writeCSV } from '../utils/writeCSV';
 import arrayToStream from '../utils/arrayToStream';
 
@@ -80,7 +79,6 @@ const generateTrie = (fileName: string): Promise<Trie> => {
   });
  
   fs.createReadStream(path.resolve(__dirname, `../cache/${fileName}`)).pipe(csvParser);
-
   return parseComplete;
 }
 

@@ -5,7 +5,7 @@ require 'pp'
 class ZipToMSA
   include HTTParty
   # Congigure ZipToMsa to point at AWS Server URL
-  base_uri "zip-to-msa-api-prod.mjr2sdfatp.us-west-2.elasticbeanstalk.com "
+  base_uri "zip-to-msa-api-prod.mjr2sdfatp.us-west-2.elasticbeanstalk.com"
 
   def getMSAByZip(zip)
     pp self.class.get('/api', :query => {:zip => zip})

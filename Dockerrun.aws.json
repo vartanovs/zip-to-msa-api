@@ -9,5 +9,5 @@
       "ContainerPort": "3000"
     }
   ],
-  "volumes": []
+  "Volumes": []
 }

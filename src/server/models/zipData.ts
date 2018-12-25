@@ -10,7 +10,8 @@ import * as csvParse from 'csv-parse';
 import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
 import Trie from './trie';
-import writeCSV from '../utils/writeCSV';
+import { writeCSV } from '../utils/writeCSV';
+import arrayToStream from '../utils/arrayToStream';
 
 /**
  * Generate Parsed Zip Code > CBSA Mapping Data with only ZIP and CBSA parameters
@@ -23,8 +24,9 @@ const generateParsedData = async (refreshData: boolean) => {
   if (!rawZipToCbsaExists || refreshData) await fetchCSV('zip_to_cbsa.csv');
   // Parse raw data for nexted array of zip and cbsa only
   const parsedDataArray = await parseRawData();
+  const parsedDataArrayStream = arrayToStream(parsedDataArray);
   // Write parsed data into new .csv file
-  await writeCSV(parsedDataArray, 'zip_to_cbsa_parsed.csv');
+  await writeCSV(parsedDataArrayStream, 'zip_to_cbsa_parsed.csv');
 };
 
 /**
@@ -57,7 +59,7 @@ const parseRawData = () => {
 /**
  * Generate Trie with O(1) Lookup to lookup CBSA from ZIP
  */
-const generateTrie = (): Promise<Trie> => {
+const generateTrie = (fileName: string): Promise<Trie> => {
   // Configure CSV Parser
   const csvParser = csvParse({ delimiter: ',' });
 
@@ -76,8 +78,7 @@ const generateTrie = (): Promise<Trie> => {
     csvParser.on('error', (err) => reject(err))
   });
  
-  fs.createReadStream(path.resolve(__dirname, '../cache/zip_to_cbsa_parsed.csv')).pipe(csvParser);
-
+  fs.createReadStream(path.resolve(__dirname, `../cache/${fileName}`)).pipe(csvParser);
   return parseComplete;
 }
 
@@ -92,7 +93,7 @@ const getCBSA = async (zip: string, refreshData: boolean = false) => {
   if (!parsedZipToCbsaExists || refreshData) await generateParsedData(refreshData);
 
   // Read parsed csv to generate Trie data structure
-  const zipTrie = await generateTrie();
+  const zipTrie = await generateTrie('zip_to_cbsa_parsed.csv');
 
   // Retrieve cbsa from Trie
   return zipTrie.get(zip);

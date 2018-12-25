@@ -1,9 +1,10 @@
 coverage/
 node_modules/
 
-# cache/*
-!cache/.gitkeep
+src/server/cache/*
+!src/server/cache/.gitkeep
 
+.env
 SPECS.MD
 .DS_Store
 

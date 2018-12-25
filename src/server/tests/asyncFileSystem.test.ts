@@ -12,17 +12,17 @@ import * as path from 'path';
 const mockExists = jest.spyOn(fs, 'exists');
 
 // Prepare Stubs
-const stubValidPath = path.resolve(__dirname, '../cache/.gitkeep')
+const stubValidPath = path.resolve(__dirname, '../tests/asyncFileSystem.test.ts')
 const stubInvalidPath = path.resolve(__dirname, '../cache/invalid.csv')
 
-describe('Fetch CSV Utility', () => {
+describe('Async File Systemnpm  Utility', () => {
   afterAll(() => {
     mockExists.mockRestore();
   })
 
   beforeEach(() => {
     mockExists.mockClear();
-  })
+  });
 
   it('fsAsync.exists calles fs.exists, passing in the filePath', () => {
     fsAsync.exists(stubValidPath)

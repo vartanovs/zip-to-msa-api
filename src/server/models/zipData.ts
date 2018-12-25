@@ -60,7 +60,7 @@ const parseRawData = () => {
 /**
  * Generate Trie with O(1) Lookup to lookup CBSA from ZIP
  */
-const generateTrie = (): Promise<Trie> => {
+const generateTrie = (fileName: string): Promise<Trie> => {
   // Configure CSV Parser
   const csvParser = csvParse({ delimiter: ',' });
 
@@ -79,7 +79,7 @@ const generateTrie = (): Promise<Trie> => {
     csvParser.on('error', (err) => reject(err))
   });
  
-  fs.createReadStream(path.resolve(__dirname, '../cache/zip_to_cbsa_parsed.csv')).pipe(csvParser);
+  fs.createReadStream(path.resolve(__dirname, `../cache/${fileName}`)).pipe(csvParser);
 
   return parseComplete;
 }
@@ -95,7 +95,7 @@ const getCBSA = async (zip: string, refreshData: boolean = false) => {
   if (!parsedZipToCbsaExists || refreshData) await generateParsedData(refreshData);
 
   // Read parsed csv to generate Trie data structure
-  const zipTrie = await generateTrie();
+  const zipTrie = await generateTrie('zip_to_cbsa_parsed.csv');
 
   // Retrieve cbsa from Trie
   return zipTrie.get(zip);

@@ -10,7 +10,8 @@ import * as csvParse from 'csv-parse';
 import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
 import Trie, { IMSAData } from './trie';
-import writeCSV from '../utils/writeCSV';
+import { writeCSV } from '../utils/writeCSV';
+import arrayToStream from '../utils/arrayToStream';
 
 interface IParsedData {
   CBSAToMDIV: string[][],
@@ -28,11 +29,13 @@ const generateParsedData = async (refreshData: boolean) => {
   if (!rawCbsaToMsaExists || refreshData) await fetchCSV('cbsa_to_msa.csv');
   // Parse raw data for nexted array of zip and cbsa only
   const parsedDataObject = await parseRawData();
+  const parsedCBSAToMDIV = arrayToStream(parsedDataObject.CBSAToMDIV);
+  const parsedCBSAToMSA = arrayToStream(parsedDataObject.CBSAToMSA);
   // Write parsed data into new .csv files
   ;
   await Promise.all([
-    writeCSV(parsedDataObject.CBSAToMDIV, 'cbsa_to_mdiv_parsed.csv'),
-    writeCSV(parsedDataObject.CBSAToMSA, 'cbsa_to_msa_parsed.csv')
+    writeCSV(parsedCBSAToMDIV, 'cbsa_to_mdiv_parsed.csv'),
+    writeCSV(parsedCBSAToMSA, 'cbsa_to_msa_parsed.csv')
   ]);
 };
 
@@ -116,7 +119,7 @@ const generateTrie = (fileName: string): Promise<Trie> => {
 /**
  * Return MSA Data associated with a CBSA
  */
-const getData = async (cbsa: string, refreshData: boolean = false) => {
+const getMSA = async (cbsa: string, refreshData: boolean = false) => {
   // Check if parsed CBSA>MSA mapping files are already cached
   const parsedCbsaToMdivExists = await fsAsync.exists(path.resolve(__dirname, '../cache/cbsa_to_mdiv_parsed.csv'));
   const parsedCbsaToMsaExists = await fsAsync.exists(path.resolve(__dirname, '../cache/cbsa_to_msa_parsed.csv'));
@@ -148,7 +151,7 @@ const getData = async (cbsa: string, refreshData: boolean = false) => {
 
 // Generate module export object and export
 const msaData = {
-  getData,
+  getMSA,
 }
 
 export default msaData;

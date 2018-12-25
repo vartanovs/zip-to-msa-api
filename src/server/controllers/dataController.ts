@@ -17,7 +17,7 @@ const retrieveData = async (req: Request, res: Response, next: NextFunction): Pr
     req.query.refresh = false;
   }
   res.locals.cbsa = await zipData.getCBSA(res.locals.zip, req.query.refresh);
-  const msaObject = await msaData.getData(res.locals.cbsa, req.query.refresh);
+  const msaObject = await msaData.getMSA(res.locals.cbsa, req.query.refresh);
   res.locals = {...res.locals, ...msaObject }
   return next();
 };

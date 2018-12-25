@@ -10,7 +10,9 @@ import * as csvParse from 'csv-parse';
 import fetchCSV from '../utils/fetchCSV';
 import fsAsync from '../utils/asyncFileSystem';
 import Trie from './trie';
-import writeCSV from '../utils/writeCSV';
+// import writeCSV from '../utils/writeCSV';
+import { writeCSV } from '../utils/writeCSV';
+import arrayToStream from '../utils/arrayToStream';
 
 /**
  * Generate Parsed Zip Code > CBSA Mapping Data with only ZIP and CBSA parameters
@@ -23,8 +25,9 @@ const generateParsedData = async (refreshData: boolean) => {
   if (!rawZipToCbsaExists || refreshData) await fetchCSV('zip_to_cbsa.csv');
   // Parse raw data for nexted array of zip and cbsa only
   const parsedDataArray = await parseRawData();
+  const parsedDataArrayStream = arrayToStream(parsedDataArray);
   // Write parsed data into new .csv file
-  await writeCSV(parsedDataArray, 'zip_to_cbsa_parsed.csv');
+  await writeCSV(parsedDataArrayStream, 'zip_to_cbsa_parsed.csv');
 };
 
 /**

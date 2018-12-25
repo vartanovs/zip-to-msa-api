@@ -3,26 +3,20 @@
  * @description CSV Fetching Utility
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import fetch from 'node-fetch';
+import { writeCSV } from './writeCSV';
 
 /**
- * Fetch Raw CSV Data
+ * Fetch Raw CSV Data and send to writeCSV
  * @param fileName The name of the file to be fetched and stored
  */
-const fetchCSV = (fileName: string): Promise<void> => {
-  // Wrap fetch in promise, resolve upon completion of writeFile stream
-  return new Promise((resolve, reject) => {
-    fetch(`https://s3.amazonaws.com/peerstreet-static/engineering/zip_to_msa/${fileName}`)
-      .then(response => {
-        const dest = fs.createWriteStream(path.resolve(__dirname, `../cache/${fileName}`));
-        response.body.pipe(dest);
-        dest.on('close', resolve);
-      })
-      .catch(err => reject(err));
-  });
+const fetchCSV = (fileName: string) => {
+  return fetch(`${process.env.PS_URI}/${fileName}`)
+    .then(response => writeCSV(response.body, fileName))
+    .catch(err => console.error(err));
 };
 
 export default fetchCSV;

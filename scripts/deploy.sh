@@ -5,7 +5,7 @@ eval $(aws ecr get-login --no-include-email --region us-west-2)
 docker --version
 
 # Build docker image based on production Dockerfile
-docker build -t vartanovs/zip-to-msa-api -f prod.Dockerfile .
+docker image build -t vartanovs/zip-to-msa-api -f prod.Dockerfile .
 
 # Push built image to ECR
 docker tag vartanovs/zip-to-msa-api:latest 436925851720.dkr.ecr.us-west-2.amazonaws.com/zip-to-msa-api:$TRAVIS_COMMIT

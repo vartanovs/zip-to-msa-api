@@ -13,3 +13,6 @@ SPECS.MD
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Dependency Lock
+package-lock.json
